@@ -1,0 +1,31 @@
+.node {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__content {
+    display: flex;
+    align-items: center;
+
+    &__name {
+      &:hover {
+        color: #ebe9e9;
+      }
+    }
+
+    &__dir-icon {
+      cursor: pointer;
+    }
+
+    &__close-icon {
+      cursor: pointer;
+      margin-left: auto;
+      // display: none;
+
+      // &:hover {
+      //   display: block;
+      // }
+
+    }
+  }
+}

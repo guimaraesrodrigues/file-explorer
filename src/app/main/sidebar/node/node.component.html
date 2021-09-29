@@ -1,0 +1,35 @@
+<div *ngFor="let child of children"
+     class="node">
+
+  <div class="node__content"
+       [ngStyle]="{'margin-left': 20 * level + 'px'}">
+
+    <ng-container [ngSwitch]="child.type">
+
+      <div *ngSwitchCase="'folder'"
+            class="node__content__dir-icon"
+            (click)="setCollapsed()">
+        <mat-icon *ngIf="!collapsed" svgIcon="arrowRight"></mat-icon>
+        <mat-icon *ngIf="collapsed" svgIcon="arrowDown"></mat-icon>
+      </div>
+
+      <div *ngSwitchCase="'file'">
+        <mat-icon [svgIcon]="getIconName(child.name)"></mat-icon>
+      </div>
+
+    </ng-container>
+
+    <span class="node__content__name">{{child?.name}}</span>
+
+    <mat-icon class="node__content__close-icon"
+              svgIcon="x">
+    </mat-icon>
+
+  </div>
+
+
+  <app-node *ngIf="child.type === 'folder' && collapsed"
+            [level]="level + 1"
+            [children]="child.children">
+  </app-node>
+</div>

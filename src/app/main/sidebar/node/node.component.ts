@@ -4,11 +4,11 @@ import { TreeNode } from 'src/app/shared/models/tree-node.model';
 import { IconService } from 'src/app/shared/services/icon/icon.service';
 
 @Component({
-  selector: 'app-directory',
-  templateUrl: './directory.component.html',
-  styleUrls: ['./directory.component.scss']
+  selector: 'app-node',
+  templateUrl: './node.component.html',
+  styleUrls: ['./node.component.scss']
 })
-export class DirectoryComponent implements OnInit {
+export class NodeComponent implements OnInit {
 
   @Input() public children: TreeNode[];
   @Input() public level: number;
@@ -27,7 +27,7 @@ export class DirectoryComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
-  public getExtension(fileName: string): string {
+  public getIconName(fileName: string): string {
     const extension = Icons[fileName.split('.').pop()];
 
     return extension ? extension : Icons.default;

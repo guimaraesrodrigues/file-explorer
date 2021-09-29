@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { DirectoryComponent } from './sidebar/directory/directory.component';
+import { NodeComponent } from './sidebar/node/node.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     MainComponent,
     SidebarComponent,
-    DirectoryComponent
+    NodeComponent
   ],
   imports: [
     CommonModule,

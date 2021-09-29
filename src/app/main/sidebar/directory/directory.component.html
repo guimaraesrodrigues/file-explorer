@@ -1,7 +1,13 @@
-<div *ngFor="let child of children">
-    <app-directory *ngIf="child.type === 'folder'"
-                  [children]="child.children">
+<div *ngFor="let child of children"
+     class="directory"
+     (click)="setCollapsed()">
+
+    <mat-icon svgIcon="arrowDown"></mat-icon>
+
+    <span class="directory__label">{{child?.name}}</span>
+
+    <app-directory *ngIf="child.type === 'folder' && collapsed"
+          [level]="level + 1"
+          [children]="child.children">
     </app-directory>
-    <span>{{child?.type}}</span>
-    <span>{{child?.name}}</span>
 </div>

@@ -4,8 +4,11 @@ body,
 #root {
   background: #111316;
   color: #c5c5c5;
-  font-family: 'Inconsolata', monospace;
+  font-family: "Roboto", sans-serif;
   height: 100%;
   margin: 0;
   width: 100%;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

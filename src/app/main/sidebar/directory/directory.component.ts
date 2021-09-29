@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TreeNode } from 'src/app/shared/models/tree-node.model';
+import { IconService } from 'src/app/shared/services/icon/icon.service';
 
 @Component({
   selector: 'app-directory',
@@ -13,7 +14,9 @@ export class DirectoryComponent implements OnInit {
 
   public collapsed: boolean = false;
 
-  constructor() { }
+  constructor(
+    private iconService: IconService
+  ) { }
 
   ngOnInit(): void {
 

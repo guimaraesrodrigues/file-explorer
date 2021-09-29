@@ -23,7 +23,7 @@ export class IconService {
    * @memberof IconService
    */
   public registerIcons(): void {
-    this.loadIcons(Object.values(Icons), 'src/assets/icons');
+    this.loadIcons(Object.values(Icons), '../assets/icons');
   }
 
   /**
@@ -36,9 +36,6 @@ export class IconService {
    */
   private loadIcons(iconKeys: string[], iconUrl: string): void {
     iconKeys.forEach(key => {
-      console.log('iconKeys', iconKeys)
-      console.log('iconUrl', iconUrl)
-
       this.matIconRegistry.addSvgIcon(key, this.domSanitizer.bypassSecurityTrustResourceUrl(`${iconUrl}/${key}.svg`));
     });
   }

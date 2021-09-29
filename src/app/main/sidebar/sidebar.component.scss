@@ -1,0 +1,13 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 90px;
+  height: 100vh;
+  background-color: transparent;
+
+  &_items {
+      cursor: pointer;
+  }
+}

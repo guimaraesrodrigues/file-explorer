@@ -1,0 +1,7 @@
+<div *ngFor="let child of children">
+    <app-directory *ngIf="child.type === 'folder'"
+                  [children]="child.children">
+    </app-directory>
+    <span>{{child?.type}}</span>
+    <span>{{child?.name}}</span>
+</div>

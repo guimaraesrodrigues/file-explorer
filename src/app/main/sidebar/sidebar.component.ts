@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { TreeNode } from 'src/app/shared/models/tree-node.model';
 import { FileService } from 'src/app/shared/services/file/file.service';
 @Component({
   selector: 'app-sidebar',
@@ -10,6 +12,8 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 export class SidebarComponent implements OnInit, OnDestroy {
 
   private subscriptionDestroyer: Subject<any> = new Subject();
+
+  public rootNode: TreeNode;
 
   constructor(
     private fileService: FileService
@@ -28,10 +32,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.fileService.getDirectoryTree()
         .pipe(takeUntil(this.subscriptionDestroyer))
         .subscribe(
-          req => {
-            console.log('oii ', req);
+          (data: TreeNode) => {
+            this.rootNode = data;
           },
-          error => {
+          (errorMsg: string) => {
 
           }
         );

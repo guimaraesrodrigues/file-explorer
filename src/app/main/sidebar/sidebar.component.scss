@@ -7,7 +7,12 @@
   height: 100vh;
   background-color: transparent;
 
-  &_items {
+  &__title {
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+
+  &__items {
       cursor: pointer;
   }
 }

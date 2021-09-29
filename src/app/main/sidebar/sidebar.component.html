@@ -1,15 +1,16 @@
 <nav class="sidebar">
 
   <div class="sidebar__title">
-     titulo aqui
+    <span *ngIf="rootNode">
+      {{rootNode?.name}}
+    </span>
+    <span *ngIf="!rootNode">
+      no project opened
+    </span>
   </div>
 
-  <div class="sidebar__files-tree">
-
-  </div>
-
-
-
+  <app-directory [children]="rootNode?.children">
+  </app-directory>
 
   <!-- <app-sidebar-button link="settings"
                       routerLink="/settings"

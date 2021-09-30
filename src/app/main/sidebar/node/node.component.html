@@ -1,35 +1,42 @@
-<div *ngFor="let child of children"
-     class="node">
+<!-- <div *ngIf="show()"> -->
+  <div *ngFor="let node of parentNode?.children"
+      class="node">
 
-  <div class="node__content"
-       [ngStyle]="{'margin-left': 20 * level + 'px'}">
+    <div class="node__content"
+        [ngStyle]="{'margin-left': 20 * level + 'px'}">
 
-    <ng-container [ngSwitch]="child.type">
+      <ng-container [ngSwitch]="node.type">
 
-      <div *ngSwitchCase="'folder'"
-            class="node__content__dir-icon"
-            (click)="setCollapsed()">
-        <mat-icon *ngIf="!collapsed" svgIcon="arrowRight"></mat-icon>
-        <mat-icon *ngIf="collapsed" svgIcon="arrowDown"></mat-icon>
-      </div>
+        <div *ngSwitchCase="'folder'"
+              class="node__content__dir-icon"
+              (click)="setCollapsedId(node.id)">
 
-      <div *ngSwitchCase="'file'">
-        <mat-icon [svgIcon]="getIconName(child.name)"></mat-icon>
-      </div>
+          <mat-icon *ngIf="node.id !== idCollapsed"
+                    svgIcon="arrowRight">
+          </mat-icon>
+          <mat-icon *ngIf="node.id === idCollapsed"
+                    svgIcon="arrowDown">
+          </mat-icon>
 
-    </ng-container>
+        </div>
 
-    <span class="node__content__name">{{child?.name}}</span>
+        <div *ngSwitchCase="'file'">
+          <mat-icon [svgIcon]="getIconName(node.name)"></mat-icon>
+        </div>
 
-    <mat-icon class="node__content__close-icon"
-              svgIcon="x">
-    </mat-icon>
+      </ng-container>
 
-  </div>
+      <span class="node__content__name">{{node?.name}}</span>
 
+      <mat-icon class="node__content__delete-icon"
+                (click)="deleteNode(node.id)"
+                svgIcon="x">
+      </mat-icon>
 
-  <app-node *ngIf="child.type === 'folder' && collapsed"
-            [level]="level + 1"
-            [children]="child.children">
-  </app-node>
-</div>
+    </div>
+
+    <app-node *ngIf="idCollapsed === node.id"
+              [parentNode]="node"
+              [level]="level + 1">
+    </app-node>
+  <!-- </div> -->

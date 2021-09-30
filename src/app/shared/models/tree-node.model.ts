@@ -3,6 +3,7 @@ interface TreeNodeInterface {
   type?: "project" | "folder" | "file";
   name?: string;
   children?: TreeNode[];
+  isCollapsed?: boolean;
 }
 
 export class TreeNode implements TreeNodeInterface {
@@ -10,16 +11,19 @@ export class TreeNode implements TreeNodeInterface {
   public type?: "project" | "folder" | "file";
   public name?: string;
   public children?: TreeNode[];
+  public isCollapsed?: boolean;
 
   constructor({
     id,
     type,
     name,
-    children
+    children,
+    isCollapsed
   }: TreeNodeInterface) {
     this.id = id;
     this.type = type;
     this.name = name;
     this.children = children;
+    this.isCollapsed = isCollapsed;
   }
 }

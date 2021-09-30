@@ -21,6 +21,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.getDirectory();
+
+    this.fileService.listenDeleteClicked()
+        .pipe(takeUntil(this.subscriptionDestroyer))
+        .subscribe(
+          (id: string) => {
+            this.deleteNode(id);
+          }
+        )
   }
 
   public ngOnDestroy(): void {
@@ -34,10 +42,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
         .subscribe(
           (data: TreeNode) => {
             this.rootNode = data;
+            this.rootNode.isCollapsed = true;
           },
           (errorMsg: string) => {
 
           }
         );
+  }
+
+  private deleteNode(id: string): void {
+    this.fileService.deleteNode(id)
+        .pipe(takeUntil(this.subscriptionDestroyer))
+        .subscribe(
+          (data: TreeNode) => {
+            this.rootNode = data;
+            this.rootNode.isCollapsed = true;
+          }
+        )
   }
 }

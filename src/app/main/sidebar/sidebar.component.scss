@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: fit-content;
+  min-width: fit-content;
+  width: 18%;
   background-color: transparent;
   border: 1px solid #3b3544;
   margin-top: 3px;

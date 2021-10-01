@@ -4,6 +4,7 @@ import { MainComponent } from './main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NodeComponent } from './sidebar/node/node.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [

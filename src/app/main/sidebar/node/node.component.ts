@@ -9,43 +9,46 @@ import { IconService } from 'src/app/shared/services/icon/icon.service';
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss']
 })
-export class NodeComponent implements OnInit {
+export class NodeComponent {
 
   @Input() public parentNode: TreeNode;
   @Input() public level: number;
-
-  public idCollapsed: string = '';
 
   constructor(
     private iconService: IconService,
     private fileService: FileService
   ) { }
 
-  ngOnInit(): void {
+  /**
+   * Set collapsed value
+   *
+   * @param {TreeNode} node
+   * @memberof NodeComponent
+   */
+  public setCollapsed(node: TreeNode): void {
+    node.isCollapsed = !node.isCollapsed;
   }
 
-  public setCollapsedId(id: string): void {
-    // console.log('colappsed ', this.collapsed)
-    console.log('parentNode ', this.parentNode.isCollapsed)
-
-    if (id === this.idCollapsed) {
-      this.idCollapsed = '';
-    } else {
-      this.idCollapsed = id;
-    }
-  }
-
+  /**
+   * Identify file extension and define icon name
+   *
+   * @param {string} fileName
+   * @returns {string}
+   * @memberof NodeComponent
+   */
   public getIconName(fileName: string): string {
     const extension = Icons[fileName.split('.').pop()];
 
     return extension ? extension : Icons.default;
   }
 
+  /**
+   * Notify delete subject with the given id
+   *
+   * @param {string} id
+   * @memberof NodeComponent
+   */
   public deleteNode(id: string): void {
     this.fileService.notifyDeleted(id);
-  }
-
-  public show(): boolean {
-    return this.parentNode?.isCollapsed;
   }
 }

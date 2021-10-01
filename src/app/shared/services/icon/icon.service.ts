@@ -17,9 +17,9 @@ export class IconService {
    }
 
   /**
-   * Register icons on component for using @shared/enums/icons.enums and path '../assets/icons'
+   * Register icons on component for using icons.enums and path '../assets/icons'
    *
-   * Register icons on @shared/enums/icons.enums for use
+   * Register icons on icons.enums for use
    * @memberof IconService
    */
   public registerIcons(): void {
@@ -28,6 +28,7 @@ export class IconService {
 
   /**
    * Loads icons on MaterialIconRegistry
+   * and set trust resource url
    *
    * @private
    * @param {string[]} iconKeys

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TreeNode } from 'src/app/shared/models/tree-node.model';
 import { FileService } from 'src/app/shared/services/file/file.service';
@@ -16,12 +17,58 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public rootNode: TreeNode;
 
   constructor(
-    private fileService: FileService
+    private fileService: FileService,
+    private snackBar: MatSnackBar,
   ) { }
 
+  /**
+   * Angular life-cycle. Get directory tree from API and init listener
+   *
+   * @memberof SidebarComponent
+   */
   public ngOnInit(): void {
     this.getDirectory();
+    this.listenToDeleteEvent();
+  }
 
+  /**
+   * Angular life-cycle. Notify subscribers to stop event listening
+   *
+   * @memberof SidebarComponent
+   */
+  public ngOnDestroy(): void {
+    this.subscriptionDestroyer.next();
+    this.subscriptionDestroyer.complete();
+  }
+
+  /**
+   * Retrieve directory tree and initialize rootNode
+   *
+   * @private
+   * @memberof SidebarComponent
+   */
+  private getDirectory(): void {
+    this.fileService.getDirectoryTree()
+        .pipe(takeUntil(this.subscriptionDestroyer))
+        .subscribe(
+          (data: TreeNode) => {
+            this.rootNode = data;
+            this.rootNode.isCollapsed = true;
+          },
+          () => {
+            this.showSnackBar('Error listing directory');
+          }
+        );
+  }
+
+  /**
+   * Listen to node delete event and calls deleteNode()
+   * with id given
+   *
+   * @private
+   * @memberof SidebarComponent
+   */
+  private listenToDeleteEvent(): void {
     this.fileService.listenDeleteClicked()
         .pipe(takeUntil(this.subscriptionDestroyer))
         .subscribe(
@@ -31,25 +78,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
         )
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  private getDirectory(): void {
-    this.fileService.getDirectoryTree()
-        .pipe(takeUntil(this.subscriptionDestroyer))
-        .subscribe(
-          (data: TreeNode) => {
-            this.rootNode = data;
-            this.rootNode.isCollapsed = true;
-          },
-          (errorMsg: string) => {
-
-          }
-        );
-  }
-
+  /**
+   * Request API to delete node
+   * Update rootNode with the returned data from API
+   *
+   * @private
+   * @param {string} id
+   * @memberof SidebarComponent
+   */
   private deleteNode(id: string): void {
     this.fileService.deleteNode(id)
         .pipe(takeUntil(this.subscriptionDestroyer))
@@ -57,7 +93,27 @@ export class SidebarComponent implements OnInit, OnDestroy {
           (data: TreeNode) => {
             this.rootNode = data;
             this.rootNode.isCollapsed = true;
+            this.showSnackBar('Node deleted!');
+          },
+          () => {
+            this.showSnackBar('Error deleting node');
           }
         )
+  }
+
+
+  /**
+   * Display snackbar with the message given
+   *
+   * @private
+   * @param {string} msg
+   * @memberof SidebarComponent
+   */
+  private showSnackBar(msg: string): void {
+    this.snackBar.open(msg, 'Close', {
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      duration: 5000
+    });
   }
 }

@@ -8,15 +8,10 @@
     </span>
   </div>
 
-  <app-node class="sidebar__items"
+  <app-node *ngIf="rootNode"
+            class="sidebar__items"
             [level]="0"
             [parentNode]="rootNode">
   </app-node>
 
-  <!-- <app-sidebar-button link="settings"
-                      routerLink="/settings"
-                      [activeTheme]="activeTheme"
-                      [matTooltip]="'Configurações'">
-    <mat-icon svgIcon="settings-icon"></mat-icon>
-  </app-sidebar-button> -->
 </nav>

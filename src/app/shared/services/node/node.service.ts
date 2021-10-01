@@ -8,7 +8,7 @@ import { TreeNode } from '../../models/tree-node.model';
 @Injectable({
   providedIn: 'root'
 })
-export class FileService {
+export class NodeService {
 
   private delete: Subject<string> = new Subject<string>();
 
@@ -18,7 +18,7 @@ export class FileService {
    * Emit event to delete subject
    *
    * @param {string} id
-   * @memberof FileService
+   * @memberof NodeService
    */
   public notifyDeleted(id: string): void {
     this.delete.next(id);
@@ -28,7 +28,7 @@ export class FileService {
    * Return delete subject as an observable
    *
    * @returns {Observable<string>}
-   * @memberof FileService
+   * @memberof NodeService
    */
   public listenDeleteClicked(): Observable<string> {
     return this.delete.asObservable();
@@ -38,7 +38,7 @@ export class FileService {
    * Get diretory tree from "API"
    *
    * @returns {Observable<TreeNode>}
-   * @memberof FileService
+   * @memberof NodeService
    */
   public getDirectoryTree(): Observable<TreeNode> {
     return from(apiMock.getDirectoryTree());
@@ -49,7 +49,7 @@ export class FileService {
    *
    * @param {string} nodeId
    * @returns {Observable<TreeNode>}
-   * @memberof FileService
+   * @memberof NodeService
    */
   public deleteNode(nodeId: string): Observable<TreeNode> {
     return from(apiMock.deleteById(nodeId));

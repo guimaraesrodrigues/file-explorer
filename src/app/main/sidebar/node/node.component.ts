@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Icons } from 'src/app/shared/enums/icons.enums';
 import { TreeNode } from 'src/app/shared/models/tree-node.model';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { NodeService } from 'src/app/shared/services/node/node.service';
 import { IconService } from 'src/app/shared/services/icon/icon.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class NodeComponent {
 
   constructor(
     private iconService: IconService,
-    private fileService: FileService
+    private nodeService: NodeService
   ) { }
 
   /**
@@ -49,6 +49,6 @@ export class NodeComponent {
    * @memberof NodeComponent
    */
   public deleteNode(id: string): void {
-    this.fileService.notifyDeleted(id);
+    this.nodeService.notifyDeleted(id);
   }
 }

@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TreeNode } from 'src/app/shared/models/tree-node.model';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { NodeService } from 'src/app/shared/services/node/node.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public rootNode: TreeNode;
 
   constructor(
-    private fileService: FileService,
+    private nodeService: NodeService,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * @memberof SidebarComponent
    */
   private getDirectory(): void {
-    this.fileService.getDirectoryTree()
+    this.nodeService.getDirectoryTree()
         .pipe(takeUntil(this.subscriptionDestroyer))
         .subscribe(
           (data: TreeNode) => {
@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * @memberof SidebarComponent
    */
   private listenToDeleteEvent(): void {
-    this.fileService.listenDeleteClicked()
+    this.nodeService.listenDeleteClicked()
         .pipe(takeUntil(this.subscriptionDestroyer))
         .subscribe(
           (id: string) => {
@@ -87,7 +87,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * @memberof SidebarComponent
    */
   private deleteNode(id: string): void {
-    this.fileService.deleteNode(id)
+    this.nodeService.deleteNode(id)
         .pipe(takeUntil(this.subscriptionDestroyer))
         .subscribe(
           (data: TreeNode) => {
